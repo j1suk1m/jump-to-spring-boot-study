@@ -1,9 +1,15 @@
 package study.springboot.board.question;
 
 import jakarta.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 import study.springboot.board.DataNotFoundException;
 import study.springboot.board.answer.Answer;
@@ -16,8 +22,11 @@ public class QuestionService {
     private final AnswerRepository answerRepository;
     private final QuestionRepository questionRepository;
 
-    public List<Question> getTotalQuestions() {
-        return questionRepository.findAll();
+    public Page<Question> getTotalQuestions(int page) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Order.desc("createdDate"));
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+        return questionRepository.findAll(pageable);
     }
 
     public Question getQuestion(Integer id) {
