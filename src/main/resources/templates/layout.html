@@ -13,8 +13,12 @@
   <title>Hello, Spring Boot Board!</title>
 </head>
 <body>
+<!-- 네비게이션 바 -->
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
 <!-- 하위 템플릿 시작 -->
 <th:block layout:fragment="content"></th:block>
 <!-- 하위 템플릿 끝 -->
+<!-- 부트스트랩 JS -->
+<script th:src="@{/bootstrap.min.js}"></script>
 </body>
 </html>
