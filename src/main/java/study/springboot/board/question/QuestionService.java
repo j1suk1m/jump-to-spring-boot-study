@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import study.springboot.board.DataNotFoundException;
 import study.springboot.board.answer.Answer;
 import study.springboot.board.answer.AnswerRepository;
 
@@ -17,6 +18,16 @@ public class QuestionService {
 
     public List<Question> getTotalQuestions() {
         return questionRepository.findAll();
+    }
+
+    public Question getQuestion(Integer id) {
+        Optional<Question> foundQuestion = questionRepository.findById(id);
+
+        if (foundQuestion.isPresent()) {
+            return foundQuestion.get();
+        } else {
+            throw new DataNotFoundException("해당 아이디의 질문이 없습니다.");
+        }
     }
 
     @PostConstruct
