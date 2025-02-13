@@ -33,4 +33,8 @@ public class AnswerService {
         answerRepository.save(answer);
     }
 
+    public void deleteAnswer(Answer answer) {
+        answerRepository.delete(answer);
+    }
+
 }

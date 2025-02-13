@@ -93,4 +93,23 @@ public class AnswerController {
         return "redirect:/question/detail/{id}";
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/delete/{id}")
+    public String deleteAnswer(
+            Principal principal,
+            @PathVariable Integer id,
+            RedirectAttributes redirectAttributes
+    ) {
+        Answer answer = answerService.getAnswer(id);
+
+        if (!answer.getAuthor().getName().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제 권한이 없습니다.");
+        }
+
+        answerService.deleteAnswer(answer);
+        redirectAttributes.addAttribute("id", answer.getQuestion().getId());
+
+        return "redirect:/question/detail/{id}";
+    }
+
 }
