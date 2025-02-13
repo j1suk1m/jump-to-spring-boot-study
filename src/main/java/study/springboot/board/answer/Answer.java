@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import study.springboot.board.member.Member;
 import study.springboot.board.question.Question;
@@ -30,6 +31,9 @@ public class Answer {
 
     @CreatedDate
     private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    private LocalDateTime modifiedDate;
 
     @ManyToOne
     private Question question;

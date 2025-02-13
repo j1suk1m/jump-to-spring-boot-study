@@ -45,6 +45,12 @@ public class QuestionService {
         questionRepository.save(question);
     }
 
+    public void modifyQuestion(Question question, String title, String content) {
+        question.setTitle(title);
+        question.setContent(content);
+        questionRepository.save(question);
+    }
+
     @PostConstruct
     public void initData() {
         if (questionRepository.count() == 0) {
