@@ -51,6 +51,10 @@ public class QuestionService {
         questionRepository.save(question);
     }
 
+    public void deleteQuestion(Question question) {
+        questionRepository.delete(question);
+    }
+
     @PostConstruct
     public void initData() {
         if (questionRepository.count() == 0) {

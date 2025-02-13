@@ -108,4 +108,19 @@ public class QuestionController {
         return "redirect:/question/detail/{id}";
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/delete/{id}")
+    public String deleteQuestion(Principal principal, @PathVariable Integer id) {
+        Question question = questionService.getQuestion(id);
+
+        // 현재 로그인한 사용자와 질문 작성자가 동일하지 않은 경우
+        if (!question.getAuthor().getName().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제 권한이 없습니다.");
+        }
+
+        questionService.deleteQuestion(question);
+
+        return "redirect:/";
+    }
+
 }
