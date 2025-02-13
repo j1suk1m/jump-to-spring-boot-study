@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import study.springboot.board.member.Member;
 import study.springboot.board.question.Question;
 
 @Entity
@@ -33,9 +34,17 @@ public class Answer {
     @ManyToOne
     private Question question;
 
+    @ManyToOne
+    private Member author;
+
     public Answer(String content, Question question) {
+        this(content, question, null);
+    }
+
+    public Answer(String content, Question question, Member author) {
         this.content = content;
         this.question = question;
+        this.author = author;
     }
 
 }

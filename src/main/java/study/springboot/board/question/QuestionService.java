@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import study.springboot.board.DataNotFoundException;
 import study.springboot.board.answer.Answer;
 import study.springboot.board.answer.AnswerRepository;
+import study.springboot.board.member.Member;
 
 @Service
 @RequiredArgsConstructor
@@ -39,16 +40,16 @@ public class QuestionService {
         }
     }
 
-    public void createQuestion(String title, String content) {
-        Question question = new Question(title, content);
+    public void createQuestion(String title, String content, Member author) {
+        Question question = new Question(title, content, author);
         questionRepository.save(question);
     }
 
     @PostConstruct
     public void initData() {
         if (questionRepository.count() == 0) {
-            createQuestion("스프링 부트가 무엇인가요?", "스프링 부트에 대해 알고 싶습니다.");
-            createQuestion("스프링 MVC 모델 질문입니다.", "ID는 자동으로 생성되나요?");
+            createQuestion("스프링 부트가 무엇인가요?", "스프링 부트에 대해 알고 싶습니다.", null);
+            createQuestion("스프링 MVC 모델 질문입니다.", "ID는 자동으로 생성되나요?", null);
 
             Optional<Question> foundQuestion = questionRepository.findById(2);
 

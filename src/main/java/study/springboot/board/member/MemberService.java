@@ -1,8 +1,10 @@
 package study.springboot.board.member;
 
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import study.springboot.board.DataNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +17,16 @@ public class MemberService {
         Member member = new Member(name, passwordEncoder.encode(password), email);
         memberRepository.save(member);
         return member;
+    }
+
+    public Member findMember(String name) {
+        Optional<Member> optionalMember = memberRepository.findByName(name);
+
+        if (optionalMember.isPresent()) {
+            return optionalMember.get();
+        }
+
+        throw new DataNotFoundException("Site User Not Found");
     }
 
 }

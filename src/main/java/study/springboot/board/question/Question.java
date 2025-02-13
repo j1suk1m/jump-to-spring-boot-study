@@ -7,6 +7,7 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,6 +17,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import study.springboot.board.answer.Answer;
+import study.springboot.board.member.Member;
 
 @Entity
 @NoArgsConstructor
@@ -38,9 +40,17 @@ public class Question {
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Answer> answers;
 
+    @ManyToOne
+    private Member author;
+
     public Question(String title, String content) {
+        this(title, content, null);
+    }
+
+    public Question(String title, String content, Member author) {
         this.title = title;
         this.content = content;
+        this.author = author;
     }
 
 }
