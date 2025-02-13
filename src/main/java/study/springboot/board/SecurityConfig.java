@@ -30,7 +30,11 @@ public class SecurityConfig {
                         .usernameParameter("name")
                         .passwordParameter("password")
                         .loginPage("/member/login") // 로그인 페이지 URL
-                        .defaultSuccessUrl("/")); // 로그인 성공 시 이동할 URL
+                        .defaultSuccessUrl("/")) // 로그인 성공 시 이동할 URL
+                .logout(logout -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")) // 로그아웃 페이지 URL
+                        .logoutSuccessUrl("/") // 로그아웃 성공 시 이동할 URL
+                        .invalidateHttpSession(true)); // 세션 삭제
 
         return http.build();
     }
